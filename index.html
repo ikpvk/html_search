@@ -21,6 +21,8 @@
         <h1>Welcome to Animal Wiki</h1>
         <p class="intro">Your quick guide to amazing animals from around the world.</p>
 
+        <input type="text" id="search-input" class="search-input" placeholder="Search animals..." autocomplete="off">
+
         <div class="welcome-box">
             <p>Select an animal from the navigation pane on the left to learn more about it. Each page contains interesting facts about the animal's habitat, diet, and characteristics.</p>
         </div>
@@ -32,5 +34,88 @@
             <a href="bear.html">Bear</a>
         </div>
     </main>
+
+    <div id="search-modal" class="search-modal">
+        <div class="search-modal-box">
+            <input type="text" id="modal-search-input" class="modal-search-input" placeholder="Search animals..." autocomplete="off">
+            <div id="search-results" class="search-results"></div>
+        </div>
+    </div>
+
+    <script>
+        const animals = [
+            { name: 'Lion', file: 'lion.html', description: 'The lion is a large cat of the genus Panthera native to Africa and India.' },
+            { name: 'Tiger', file: 'tiger.html', description: 'The tiger is the largest living cat species and a iconic apex predator.' },
+            { name: 'Bear', file: 'bear.html', description: 'Bears are large mammals belonging to the family Ursidae, found across the Northern Hemisphere.' }
+        ];
+
+        const searchInput = document.getElementById('search-input');
+        const modalSearchInput = document.getElementById('modal-search-input');
+        const searchModal = document.getElementById('search-modal');
+        const searchResults = document.getElementById('search-results');
+
+        function openModal() {
+            searchModal.style.display = 'flex';
+            modalSearchInput.value = '';
+            searchResults.innerHTML = '';
+            modalSearchInput.focus();
+        }
+
+        function closeModal() {
+            searchModal.style.display = 'none';
+        }
+
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+            return text.replace(regex, '<strong>$1</strong>');
+        }
+
+        function performSearch(query) {
+            searchResults.innerHTML = '';
+            if (!query) {
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            const matches = animals.filter(animal => {
+                const q = query.toLowerCase();
+                return animal.name.toLowerCase().includes(q) || animal.description.toLowerCase().includes(q);
+            });
+
+            if (matches.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">No results found</div>';
+                return;
+            }
+
+            matches.forEach(animal => {
+                const result = document.createElement('div');
+                result.className = 'result-item';
+                result.innerHTML = '<div class="result-name">' + highlightMatch(animal.name, query) + '</div><div class="result-desc">' + highlightMatch(animal.description, query) + '</div>';
+                result.onclick = function() {
+                    window.location.href = animal.file;
+                };
+                searchResults.appendChild(result);
+            });
+        }
+
+        searchInput.addEventListener('click', openModal);
+
+        modalSearchInput.addEventListener('input', function() {
+            performSearch(this.value);
+        });
+
+        searchModal.addEventListener('click', function(e) {
+            if (e.target === searchModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
