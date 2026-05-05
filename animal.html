@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bear - Animal Wiki</title>
+    <title>Animal Wiki</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,9 +12,9 @@
         <h2>Animal Wiki</h2>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="lion.html">Lion</a></li>
-            <li><a href="tiger.html">Tiger</a></li>
-            <li><a href="bear.html">Bear</a></li>
+            <li><a href="animal.html#lion">Lion</a></li>
+            <li><a href="animal.html#tiger">Tiger</a></li>
+            <li><a href="animal.html#bear">Bear</a></li>
         </ul>
     </nav>
 
@@ -25,16 +25,9 @@
 
     <script src="animals.js"></script>
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const navPane = document.getElementById('nav-pane');
-
-        hamburger.addEventListener('click', function() {
-            navPane.classList.toggle('open');
-        });
-
         function loadAnimalData() {
-            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
-            const animal = animalsData.find(a => a.file === currentFile);
+            const hash = window.location.hash.slice(1);
+            const animal = animalsData.find(a => a.file === hash + '.html');
 
             if (animal) {
                 document.getElementById('animal-title').textContent = animal.name;
@@ -43,7 +36,8 @@
 
                 const links = document.querySelectorAll('.nav-pane a');
                 links.forEach(link => {
-                    if (link.getAttribute('href') === currentFile) {
+                    const href = link.getAttribute('href');
+                    if (href === hash + '.html' || href === 'animal.html#' + hash) {
                         link.classList.add('active');
                     } else {
                         link.classList.remove('active');
@@ -51,6 +45,15 @@
                 });
             }
         }
+
+        const hamburger = document.getElementById('hamburger');
+        const navPane = document.getElementById('nav-pane');
+
+        hamburger.addEventListener('click', function() {
+            navPane.classList.toggle('open');
+        });
+
+        window.addEventListener('hashchange', loadAnimalData);
 
         loadAnimalData();
     </script>
