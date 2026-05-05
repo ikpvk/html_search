@@ -42,13 +42,8 @@
         </div>
     </div>
 
+    <script src="animals.js"></script>
     <script>
-        const animals = [
-            { name: 'Lion', file: 'lion.html', description: 'The lion is a large cat of the genus Panthera native to Africa and India.' },
-            { name: 'Tiger', file: 'tiger.html', description: 'The tiger is the largest living cat species and a iconic apex predator.' },
-            { name: 'Bear', file: 'bear.html', description: 'Bears are large mammals belonging to the family Ursidae, found across the Northern Hemisphere.' }
-        ];
-
         const searchInput = document.getElementById('search-input');
         const modalSearchInput = document.getElementById('modal-search-input');
         const searchModal = document.getElementById('search-modal');
@@ -78,7 +73,7 @@
                 return;
             }
 
-            const matches = animals.filter(animal => {
+            const matches = animalsData.filter(animal => {
                 const q = query.toLowerCase();
                 return animal.name.toLowerCase().includes(q) || animal.description.toLowerCase().includes(q);
             });

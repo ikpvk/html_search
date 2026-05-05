@@ -11,15 +11,40 @@
         <h2>Animal Wiki</h2>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="lion.html" class="active">Lion</a></li>
+            <li><a href="lion.html">Lion</a></li>
             <li><a href="tiger.html">Tiger</a></li>
             <li><a href="bear.html">Bear</a></li>
         </ul>
     </nav>
 
     <main class="main-content">
-        <h1>Lion</h1>
-        <p class="intro">The lion is a large cat of the genus Panthera native to Africa and India.</p>
+        <h1 id="animal-title"></h1>
+        <p id="animal-description" class="intro"></p>
     </main>
+
+    <script src="animals.js"></script>
+    <script>
+        function loadAnimalData() {
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            const animal = animalsData.find(a => a.file === currentFile);
+
+            if (animal) {
+                document.getElementById('animal-title').textContent = animal.name;
+                document.getElementById('animal-description').textContent = animal.description;
+                document.title = animal.name + ' - Animal Wiki';
+
+                const links = document.querySelectorAll('.nav-pane a');
+                links.forEach(link => {
+                    if (link.getAttribute('href') === currentFile) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        loadAnimalData();
+    </script>
 </body>
 </html>
