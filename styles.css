@@ -122,12 +122,16 @@ body {
 
 @media (max-width: 600px) {
     .nav-pane {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
+        width: 250px;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-right: 1px solid #ddd;
+        border-bottom: none;
         display: none;
+        z-index: 1000;
+        overflow-y: auto;
     }
 
     .nav-pane.open {
@@ -143,7 +147,8 @@ body {
         display: block;
         position: fixed;
         top: 10px;
-        left: 10px;
+        left: auto;
+        right: 10px;
         font-size: 1.5rem;
         background: #333;
         color: #fff;
