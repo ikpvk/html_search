@@ -57,6 +57,10 @@ body {
     color: #fff;
 }
 
+.hamburger {
+    display: none;
+}
+
 .main-content {
     margin-left: 220px;
     padding: 40px;
@@ -123,11 +127,40 @@ body {
         position: relative;
         border-right: none;
         border-bottom: 1px solid #ddd;
+        display: none;
+    }
+
+    .nav-pane.open {
+        display: block;
     }
 
     .main-content {
         margin-left: 0;
         padding: 20px;
+    }
+
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        font-size: 1.5rem;
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        z-index: 1001;
+        font-family: inherit;
+    }
+
+    .hamburger:focus {
+        outline: none;
+    }
+
+    .main-content {
+        padding-top: 60px;
     }
 }
 

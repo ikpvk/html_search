@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="nav-pane">
+    <button class="hamburger" id="hamburger">☰</button>
+    <nav class="nav-pane" id="nav-pane">
         <h2>Animal Wiki</h2>
         <ul>
             <li><a href="index.html">Home</a></li>
@@ -24,6 +25,13 @@
 
     <script src="animals.js"></script>
     <script>
+        const hamburger = document.getElementById('hamburger');
+        const navPane = document.getElementById('nav-pane');
+
+        hamburger.addEventListener('click', function() {
+            navPane.classList.toggle('open');
+        });
+
         function loadAnimalData() {
             const currentFile = window.location.pathname.split('/').pop() || 'index.html';
             const animal = animalsData.find(a => a.file === currentFile);
